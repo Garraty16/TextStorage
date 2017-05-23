@@ -13,8 +13,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    storageservice.cpp \
+    comline.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    storageservice.h \
+    comline.h
 
 FORMS    += mainwindow.ui

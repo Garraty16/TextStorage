@@ -61,10 +61,6 @@ public:
         lab_title->setGeometry(QRect(280, 0, 161, 41));
         lab_title->setStyleSheet(QStringLiteral(""));
         listTexts = new QListWidget(centralWidget);
-        new QListWidgetItem(listTexts);
-        new QListWidgetItem(listTexts);
-        new QListWidgetItem(listTexts);
-        new QListWidgetItem(listTexts);
         listTexts->setObjectName(QStringLiteral("listTexts"));
         listTexts->setGeometry(QRect(20, 110, 201, 481));
         QFont font;
@@ -84,21 +80,21 @@ public:
         btnDelete->setStyleSheet(QStringLiteral("background-color: #fab"));
         textCommit = new QLineEdit(centralWidget);
         textCommit->setObjectName(QStringLiteral("textCommit"));
-        textCommit->setGeometry(QRect(240, 420, 301, 27));
+        textCommit->setGeometry(QRect(240, 420, 380, 27));
         btnCommit = new QPushButton(centralWidget);
         btnCommit->setObjectName(QStringLiteral("btnCommit"));
-        btnCommit->setGeometry(QRect(560, 420, 85, 27));
+        btnCommit->setGeometry(QRect(635, 420, 85, 27));
         listCommits = new QListWidget(centralWidget);
         new QListWidgetItem(listCommits);
         new QListWidgetItem(listCommits);
         listCommits->setObjectName(QStringLiteral("listCommits"));
-        listCommits->setGeometry(QRect(240, 470, 301, 121));
+        listCommits->setGeometry(QRect(240, 470, 380, 121));
         btnMerge = new QPushButton(centralWidget);
         btnMerge->setObjectName(QStringLiteral("btnMerge"));
-        btnMerge->setGeometry(QRect(560, 510, 81, 30));
+        btnMerge->setGeometry(QRect(635, 510, 81, 30));
         btnCheckout = new QPushButton(centralWidget);
         btnCheckout->setObjectName(QStringLiteral("btnCheckout"));
-        btnCheckout->setGeometry(QRect(560, 470, 85, 30));
+        btnCheckout->setGeometry(QRect(635, 470, 85, 30));
         btnSave = new QPushButton(centralWidget);
         btnSave->setObjectName(QStringLiteral("btnSave"));
         btnSave->setGeometry(QRect(630, 70, 85, 27));
@@ -139,19 +135,6 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Text Storage", 0));
         lab_title->setText(QApplication::translate("MainWindow", "<h1> Text Storage </h1>", 0));
-
-        const bool __sortingEnabled = listTexts->isSortingEnabled();
-        listTexts->setSortingEnabled(false);
-        QListWidgetItem *___qlistwidgetitem = listTexts->item(0);
-        ___qlistwidgetitem->setText(QApplication::translate("MainWindow", "item 2", 0));
-        QListWidgetItem *___qlistwidgetitem1 = listTexts->item(1);
-        ___qlistwidgetitem1->setText(QApplication::translate("MainWindow", "New Item", 0));
-        QListWidgetItem *___qlistwidgetitem2 = listTexts->item(2);
-        ___qlistwidgetitem2->setText(QApplication::translate("MainWindow", "New Item", 0));
-        QListWidgetItem *___qlistwidgetitem3 = listTexts->item(3);
-        ___qlistwidgetitem3->setText(QApplication::translate("MainWindow", "New Item", 0));
-        listTexts->setSortingEnabled(__sortingEnabled);
-
         btnAdd->setText(QApplication::translate("MainWindow", "Add", 0));
         textEdit->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -161,13 +144,13 @@ public:
         btnDelete->setText(QApplication::translate("MainWindow", "Delete", 0));
         btnCommit->setText(QApplication::translate("MainWindow", "Commit", 0));
 
-        const bool __sortingEnabled1 = listCommits->isSortingEnabled();
+        const bool __sortingEnabled = listCommits->isSortingEnabled();
         listCommits->setSortingEnabled(false);
-        QListWidgetItem *___qlistwidgetitem4 = listCommits->item(0);
-        ___qlistwidgetitem4->setText(QApplication::translate("MainWindow", "initial", 0));
-        QListWidgetItem *___qlistwidgetitem5 = listCommits->item(1);
-        ___qlistwidgetitem5->setText(QApplication::translate("MainWindow", "added few lines of text", 0));
-        listCommits->setSortingEnabled(__sortingEnabled1);
+        QListWidgetItem *___qlistwidgetitem = listCommits->item(0);
+        ___qlistwidgetitem->setText(QApplication::translate("MainWindow", "initial", 0));
+        QListWidgetItem *___qlistwidgetitem1 = listCommits->item(1);
+        ___qlistwidgetitem1->setText(QApplication::translate("MainWindow", "added few lines of text", 0));
+        listCommits->setSortingEnabled(__sortingEnabled);
 
         btnMerge->setText(QApplication::translate("MainWindow", "Merge", 0));
         btnCheckout->setText(QApplication::translate("MainWindow", "Checkout", 0));

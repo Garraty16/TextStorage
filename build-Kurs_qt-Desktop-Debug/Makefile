@@ -49,9 +49,13 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../Kurs_qt/main.cpp \
-		../Kurs_qt/mainwindow.cpp moc_mainwindow.cpp
+		../Kurs_qt/mainwindow.cpp \
+		../Kurs_qt/storageservice.cpp \
+		../Kurs_qt/comline.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
+		storageservice.o \
+		comline.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -109,8 +113,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../Kurs_qt/Kurs_qt.pro ../Kurs_qt/mainwindow.h ../Kurs_qt/main.cpp \
-		../Kurs_qt/mainwindow.cpp
+		../Kurs_qt/Kurs_qt.pro ../Kurs_qt/mainwindow.h \
+		../Kurs_qt/storageservice.h \
+		../Kurs_qt/comline.h ../Kurs_qt/main.cpp \
+		../Kurs_qt/mainwindow.cpp \
+		../Kurs_qt/storageservice.cpp \
+		../Kurs_qt/comline.cpp
 QMAKE_TARGET  = Kurs_qt
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Kurs_qt
@@ -276,8 +284,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Kurs_qt/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Kurs_qt/main.cpp ../Kurs_qt/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Kurs_qt/mainwindow.h ../Kurs_qt/storageservice.h ../Kurs_qt/comline.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Kurs_qt/main.cpp ../Kurs_qt/mainwindow.cpp ../Kurs_qt/storageservice.cpp ../Kurs_qt/comline.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Kurs_qt/mainwindow.ui $(DISTDIR)/
 
 
@@ -304,7 +312,8 @@ compiler_rcc_clean:
 compiler_moc_header_make_all: moc_mainwindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp
-moc_mainwindow.cpp: ../Kurs_qt/mainwindow.h
+moc_mainwindow.cpp: ../Kurs_qt/storageservice.h \
+		../Kurs_qt/mainwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/garraty/Documents/Code/univer/Kurs/Kurs_qt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Kurs_qt/mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_source_make_all:
@@ -325,12 +334,20 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-main.o: ../Kurs_qt/main.cpp ../Kurs_qt/mainwindow.h
+main.o: ../Kurs_qt/main.cpp ../Kurs_qt/mainwindow.h \
+		../Kurs_qt/storageservice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Kurs_qt/main.cpp
 
 mainwindow.o: ../Kurs_qt/mainwindow.cpp ../Kurs_qt/mainwindow.h \
+		../Kurs_qt/storageservice.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Kurs_qt/mainwindow.cpp
+
+storageservice.o: ../Kurs_qt/storageservice.cpp ../Kurs_qt/storageservice.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o storageservice.o ../Kurs_qt/storageservice.cpp
+
+comline.o: ../Kurs_qt/comline.cpp ../Kurs_qt/comline.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o comline.o ../Kurs_qt/comline.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
