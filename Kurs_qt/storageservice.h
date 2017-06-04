@@ -18,11 +18,11 @@ class StorageService
         int saveTextFile(char* filename, QString content);
         QString* getFilesList();
         int deleteTextFile(QString filename);
+        char* doCommand(char* com);
 
     private:
         ComLine* comLine;
         void test();
-        char* doCommand(char* com);
         char* m_dirTexts; // Папка, где хранятся тексты
 };
 

@@ -53,12 +53,12 @@ QString* StorageService::getFilesList()
         struct dirent *entry = readdir(dir);
         while (entry != NULL)
         {
-            if (entry->d_type == DT_DIR){
+//            if (entry->d_type == DT_DIR){
                 list[iCur] = QString("%1").arg(entry->d_name);
                 if (list[iCur] != "."
                         && list[iCur] != "..")
                 iCur++;
-            }
+//            }
             entry = readdir(dir);
         }
         closedir(dir);

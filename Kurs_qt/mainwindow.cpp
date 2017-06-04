@@ -36,6 +36,8 @@ void MainWindow::init()
         new QListWidgetItem(tr(list[i].toStdString().c_str()), ui->listTexts);
     }
     ui->listTexts->setCurrentRow(0);
+
+
 }
 
 // Отображает всплывающее сообщение в окошке с текстом msg

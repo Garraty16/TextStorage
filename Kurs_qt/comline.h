@@ -14,8 +14,9 @@ class ComLine
     public:
         explicit ComLine(char* com);
 
-    QString doCommand(char* com);
+        QString doCommand(char* com);
         int close();
+
     private:
         std::FILE *inpFile;
 };

@@ -313,6 +313,7 @@ compiler_moc_header_make_all: moc_mainwindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp
 moc_mainwindow.cpp: ../Kurs_qt/storageservice.h \
+		../Kurs_qt/comline.h \
 		../Kurs_qt/mainwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/garraty/Documents/Code/univer/Kurs/Kurs_qt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Kurs_qt/mainwindow.h -o moc_mainwindow.cpp
 
@@ -335,15 +336,18 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 ####### Compile
 
 main.o: ../Kurs_qt/main.cpp ../Kurs_qt/mainwindow.h \
-		../Kurs_qt/storageservice.h
+		../Kurs_qt/storageservice.h \
+		../Kurs_qt/comline.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Kurs_qt/main.cpp
 
 mainwindow.o: ../Kurs_qt/mainwindow.cpp ../Kurs_qt/mainwindow.h \
 		../Kurs_qt/storageservice.h \
-		ui_mainwindow.h
+		../Kurs_qt/comline.h \
+		../Kurs_qt/ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Kurs_qt/mainwindow.cpp
 
-storageservice.o: ../Kurs_qt/storageservice.cpp ../Kurs_qt/storageservice.h
+storageservice.o: ../Kurs_qt/storageservice.cpp ../Kurs_qt/storageservice.h \
+		../Kurs_qt/comline.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o storageservice.o ../Kurs_qt/storageservice.cpp
 
 comline.o: ../Kurs_qt/comline.cpp ../Kurs_qt/comline.h
