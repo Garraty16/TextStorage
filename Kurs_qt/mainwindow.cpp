@@ -36,8 +36,6 @@ void MainWindow::init()
         new QListWidgetItem(tr(list[i].toStdString().c_str()), ui->listTexts);
     }
     ui->listTexts->setCurrentRow(0);
-
-
 }
 
 // Отображает всплывающее сообщение в окошке с текстом msg
@@ -51,6 +49,7 @@ void MainWindow::alert(QString msg)
 // Нажатие на Cancel
 void MainWindow::on_btnCancel_clicked()
 {
+    creatingFile = false;
     ui->labFilename->hide();
     ui->textFilename->hide();
     ui->btnCancel->hide();
@@ -71,8 +70,19 @@ void MainWindow::on_listTexts_currentRowChanged(int currentRow)
 {
     QString fnQ = ui->listTexts->currentItem()->text();
     char* filename = (char*)fnQ.toStdString().c_str();
-    QString text = ss->getTextFromFile(filename);
+    QString fullName = QString("%1/%2").arg(filename, filename);
+    QString text = ss->getTextFromFile((char*)fullName.toStdString().c_str());
     ui->textEdit->setText(text);
+
+    // refresh commits
+    ui->listCommits->clear();
+    QString* commits = ss->getCommitsList(filename);
+    for (int i = 0; i < 256; i++){
+        if (commits[i] == "")
+            break;
+        new QListWidgetItem(tr(commits[i].toStdString().c_str()), ui->listCommits);
+        ui->listCommits->setCurrentRow(ui->listCommits->count() - 1);
+    }
 }
 
 void MainWindow::on_listTextFiles_currentRowChanged(int currentRow) {}
@@ -118,4 +128,29 @@ void MainWindow::on_btnDelete_clicked()
     if (ss->deleteTextFile(fnQ) == 0){
         delete(ui->listTexts->currentItem());
     }
+}
+
+// Сделать коммит
+void MainWindow::on_btnCommit_clicked()
+{
+    QString fnQ = ui->listTexts->currentItem()->text();
+    QString commitName = ui->textCommit->text();
+    if (commitName != ""){
+        ss->commit(commitName, fnQ);
+        new QListWidgetItem(tr(commitName.toStdString().c_str()), ui->listCommits);
+        ui->listCommits->setCurrentRow(ui->listCommits->count() - 1);
+    }
+}
+
+void MainWindow::on_btnCheckout_clicked()
+{
+    QString fnQ = ui->listTexts->currentItem()->text();
+    QString commitName = ui->listCommits->currentItem()->text();
+    ss->checkout(commitName, fnQ);
+
+    // refresh text
+    char* filename = (char*)fnQ.toStdString().c_str();
+    QString fullName = QString("%1/%2").arg(filename, filename);
+    QString text = ss->getTextFromFile((char*)fullName.toStdString().c_str());
+    ui->textEdit->setText(text);
 }

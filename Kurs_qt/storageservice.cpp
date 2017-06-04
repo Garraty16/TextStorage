@@ -23,7 +23,6 @@ char* StorageService::doCommand(char* com)
         while(fgets(buff, sizeof(buff), inpFile) != NULL) {
             msg = QString("%1 ").arg(buff);
         }
-
     }
     pclose(inpFile);
 }
@@ -32,14 +31,14 @@ char* StorageService::doCommand(char* com)
 QString StorageService::getTextFromFile(char* filename)
 {
     QString outp = "";
-    std::ifstream file(QString("%1/%2/%3")
-                       .arg(m_dirTexts, filename, filename)
+    std::ifstream file(QString("%1/%2")
+                       .arg(m_dirTexts, filename)
                        .toStdString().c_str());
-        std::string str;
-        while (std::getline(file, str))
-        {
-            outp += QString::fromStdString(str) + QString("\n");
-        }
+    std::string str;
+    while (std::getline(file, str))
+    {
+        outp += QString::fromStdString(str) + QString("\n");
+    }
     return outp;
 }
 
@@ -107,4 +106,68 @@ int StorageService::deleteTextFile(QString filename)
         return -1;
     }
     return 0;
+}
+
+char* StorageService::commit(QString commitName, QString filename)
+{
+    QString fileDir = QString("%1/%2")
+            .arg(m_dirTexts, filename);
+    QString commitsFN = QString("%1/%2/%3")
+            .arg(m_dirTexts, filename, "commits.dat");
+    QString cmd = "";
+    // git init
+    cmd = "cd " + fileDir + " && git init";
+    doCommand((char*)cmd.toStdString().c_str());
+
+    // Коммит
+    cmd = "cd " + fileDir + " && git add *";
+    doCommand((char*)cmd.toStdString().c_str());
+    cmd = "cd " + fileDir + " && git commit -m '" + commitName + "'";
+    doCommand((char*)cmd.toStdString().c_str());
+
+    // Записываем коммит в файл коммитов
+    QString commitsFNShort = QString("%1/%2").arg(filename, "/commits.dat");
+    QString oldCommits = getTextFromFile((char*)commitsFNShort.toStdString().c_str());
+    QFile file(commitsFN);
+    if (file.open(QIODevice::ReadWrite)) {
+        QTextStream stream(&file);
+        stream << oldCommits  << commitName << endl;
+    }
+    file.close();
+}
+
+int StorageService::checkout(QString commitName, QString filename)
+{
+    QString fileDir = QString("%1/%2")
+            .arg(m_dirTexts, filename);
+    QString cmd = "";
+
+    // Checkout cmd
+    cmd = "cd " + fileDir + " && git checkout -b " + commitName + " "
+            + "'" + commitName + "'";
+    doCommand((char*)cmd.toStdString().c_str());
+}
+
+int StorageService::merge(QString commitName, QString filename)
+{
+
+}
+
+QString* StorageService::getCommitsList(char* filename)
+{
+    QString* outp = new QString[256];
+    outp[0] = QString("");
+    int curLine = 0;
+    std::ifstream file(QString("%1/%2/%3")
+                       .arg(m_dirTexts, filename, "commits.dat")
+                       .toStdString().c_str());
+    std::string str;
+    while (std::getline(file, str))
+    {
+        outp[curLine] = QString::fromStdString(str) + QString("\n");
+        curLine++;
+    }
+    file.close();
+    outp[curLine] = QString("");
+    return outp;
 }

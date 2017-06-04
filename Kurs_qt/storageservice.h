@@ -18,10 +18,14 @@ class StorageService
         int saveTextFile(char* filename, QString content);
         QString* getFilesList();
         int deleteTextFile(QString filename);
-        char* doCommand(char* com);
+        char* commit(QString commitName, QString filename);
+        int checkout(QString commitName, QString filename);
+        int merge(QString commitName, QString filename);
+        QString* getCommitsList(char* filename);
 
     private:
         ComLine* comLine;
+        char* doCommand(char* com);
         void test();
         char* m_dirTexts; // Папка, где хранятся тексты
 };

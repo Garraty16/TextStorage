@@ -83,18 +83,16 @@ public:
         textCommit->setGeometry(QRect(240, 420, 380, 27));
         btnCommit = new QPushButton(centralWidget);
         btnCommit->setObjectName(QStringLiteral("btnCommit"));
-        btnCommit->setGeometry(QRect(635, 420, 85, 27));
+        btnCommit->setGeometry(QRect(635, 420, 90, 27));
         listCommits = new QListWidget(centralWidget);
-        new QListWidgetItem(listCommits);
-        new QListWidgetItem(listCommits);
         listCommits->setObjectName(QStringLiteral("listCommits"));
         listCommits->setGeometry(QRect(240, 470, 380, 121));
         btnMerge = new QPushButton(centralWidget);
         btnMerge->setObjectName(QStringLiteral("btnMerge"));
-        btnMerge->setGeometry(QRect(635, 510, 81, 30));
+        btnMerge->setGeometry(QRect(635, 510, 90, 30));
         btnCheckout = new QPushButton(centralWidget);
         btnCheckout->setObjectName(QStringLiteral("btnCheckout"));
-        btnCheckout->setGeometry(QRect(635, 470, 85, 30));
+        btnCheckout->setGeometry(QRect(635, 470, 90, 30));
         btnSave = new QPushButton(centralWidget);
         btnSave->setObjectName(QStringLiteral("btnSave"));
         btnSave->setGeometry(QRect(630, 70, 85, 27));
@@ -143,15 +141,6 @@ public:
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt;\"><br /></p></body></html>", 0));
         btnDelete->setText(QApplication::translate("MainWindow", "Delete", 0));
         btnCommit->setText(QApplication::translate("MainWindow", "Commit", 0));
-
-        const bool __sortingEnabled = listCommits->isSortingEnabled();
-        listCommits->setSortingEnabled(false);
-        QListWidgetItem *___qlistwidgetitem = listCommits->item(0);
-        ___qlistwidgetitem->setText(QApplication::translate("MainWindow", "initial", 0));
-        QListWidgetItem *___qlistwidgetitem1 = listCommits->item(1);
-        ___qlistwidgetitem1->setText(QApplication::translate("MainWindow", "added few lines of text", 0));
-        listCommits->setSortingEnabled(__sortingEnabled);
-
         btnMerge->setText(QApplication::translate("MainWindow", "Merge", 0));
         btnCheckout->setText(QApplication::translate("MainWindow", "Checkout", 0));
         btnSave->setText(QApplication::translate("MainWindow", "Save", 0));
