@@ -36,6 +36,8 @@ private slots:
 
     void on_btnCheckout_clicked();
 
+    void on_btnMerge_clicked();
+
 private:
     Ui::MainWindow *ui;
     StorageService *ss;

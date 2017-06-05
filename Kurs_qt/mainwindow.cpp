@@ -77,7 +77,7 @@ void MainWindow::on_listTexts_currentRowChanged(int currentRow)
     // refresh commits
     ui->listCommits->clear();
     QString* commits = ss->getCommitsList(filename);
-    for (int i = 0; i < 256; i++){
+    for (int i = 0; i < 256; i += 2){
         if (commits[i] == "")
             break;
         new QListWidgetItem(tr(commits[i].toStdString().c_str()), ui->listCommits);
@@ -133,10 +133,13 @@ void MainWindow::on_btnDelete_clicked()
 // Сделать коммит
 void MainWindow::on_btnCommit_clicked()
 {
+    on_btnCancel_clicked();
+    on_btnSave_clicked();
+
     QString fnQ = ui->listTexts->currentItem()->text();
     QString commitName = ui->textCommit->text();
     if (commitName != ""){
-        ss->commit(commitName, fnQ);
+        ss->commit(commitName, fnQ, true, false);
         new QListWidgetItem(tr(commitName.toStdString().c_str()), ui->listCommits);
         ui->listCommits->setCurrentRow(ui->listCommits->count() - 1);
     }
@@ -144,12 +147,37 @@ void MainWindow::on_btnCommit_clicked()
 
 void MainWindow::on_btnCheckout_clicked()
 {
+    on_btnCancel_clicked();
+    on_btnSave_clicked();
+
     QString fnQ = ui->listTexts->currentItem()->text();
-    QString commitName = ui->listCommits->currentItem()->text();
+    char* filename = (char*)fnQ.toStdString().c_str();
+    QString *commits = ss->getCommitsList(filename);
+    int commitNum = ui->listCommits->currentIndex().row();
+    commitNum = commitNum * 2 + 1;
+    QString commitName = commits[commitNum];
     ss->checkout(commitName, fnQ);
 
     // refresh text
+    QString fullName = QString("%1/%2").arg(filename, filename);
+    QString text = ss->getTextFromFile((char*)fullName.toStdString().c_str());
+    ui->textEdit->setText(text);
+}
+
+void MainWindow::on_btnMerge_clicked()
+{
+    on_btnCancel_clicked();
+    on_btnSave_clicked();
+
+    QString fnQ = ui->listTexts->currentItem()->text();
     char* filename = (char*)fnQ.toStdString().c_str();
+    QString *commits = ss->getCommitsList(filename);
+    int commitNum = ui->listCommits->currentIndex().row();
+    commitNum = commitNum * 2 + 1;
+    QString commitName = commits[commitNum];
+    ss->merge(commitName, fnQ);
+
+    // refresh text
     QString fullName = QString("%1/%2").arg(filename, filename);
     QString text = ss->getTextFromFile((char*)fullName.toStdString().c_str());
     ui->textEdit->setText(text);
